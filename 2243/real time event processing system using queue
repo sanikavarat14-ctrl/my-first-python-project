@@ -1,0 +1,78 @@
+from collections import deque
+
+# Event Queue
+event_queue = deque()
+
+
+# Add an event
+def add_event():
+    event = input("Enter event: ")
+    event_queue.append(event)
+    print("Event added successfully!")
+
+
+# Process the next event
+def process_event():
+    if len(event_queue) == 0:
+        print("No events to process.")
+    else:
+        event = event_queue.popleft()
+        print("Processing event:", event)
+
+
+# Display pending events
+def display_events():
+    if len(event_queue) == 0:
+        print("No pending events.")
+    else:
+        print("\nPending Events:")
+        for event in event_queue:
+            print("-", event)
+
+
+# Cancel an event
+def cancel_event():
+    if len(event_queue) == 0:
+        print("No events to cancel.")
+        return
+
+    event = input("Enter event to cancel: ")
+
+    if event in event_queue:
+        event_queue.remove(event)
+        print("Event cancelled successfully!")
+    else:
+        print("Event not found.")
+
+
+# Main program
+while True:
+    print("\n==============================")
+    print(" REAL-TIME EVENT PROCESSING")
+    print("==============================")
+    print("1. Add Event")
+    print("2. Process Next Event")
+    print("3. Display Pending Events")
+    print("4. Cancel Event")
+    print("5. Exit")
+
+    choice = int(input("Enter your choice: "))
+
+    if choice == 1:
+        add_event()
+
+    elif choice == 2:
+        process_event()
+
+    elif choice == 3:
+        display_events()
+
+    elif choice == 4:
+        cancel_event()
+
+    elif choice == 5:
+        print("Exiting program...")
+        break
+
+    else:
+        print("Invalid choice!")
