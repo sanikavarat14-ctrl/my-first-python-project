@@ -1,0 +1,96 @@
+# Undo/Redo System using Stack
+
+# Two stacks
+undo_stack = []
+redo_stack = []
+
+# Current document
+document = ""
+
+
+# Make a new change
+def make_change():
+    global document
+
+    change = input("Enter text to add: ")
+
+    # Store current state before making change
+    undo_stack.append(document)
+
+    document = document + change
+
+    # Clear redo stack after a new change
+    redo_stack.clear()
+
+    print("Change made successfully!")
+
+
+# Undo the last change
+def undo_action():
+    global document
+
+    if len(undo_stack) == 0:
+        print("Nothing to undo.")
+    else:
+        # Store current state in redo stack
+        redo_stack.append(document)
+
+        # Restore previous state
+        document = undo_stack.pop()
+
+        print("Undo successful!")
+
+
+# Redo the last undone change
+def redo_action():
+    global document
+
+    if len(redo_stack) == 0:
+        print("Nothing to redo.")
+    else:
+        # Store current state in undo stack
+        undo_stack.append(document)
+
+        # Restore undone state
+        document = redo_stack.pop()
+
+        print("Redo successful!")
+
+
+# Display document
+def display_document():
+    print("\nCurrent Document:")
+    print(document)
+
+
+# Main program
+while True:
+    print("\n==============================")
+    print(" TEXT EDITOR - UNDO / REDO")
+    print("==============================")
+    print("1. Make a Change")
+    print("2. Undo Action")
+    print("3. Redo Action")
+    print("4. Display Document State")
+    print("5. Exit")
+
+    choice = int(input("Enter your choice: "))
+
+    if choice == 1:
+        make_change()
+
+    elif choice == 2:
+        undo_action()
+
+    elif choice == 3:
+        redo_action()
+
+    elif choice == 4:
+        display_document()
+
+    elif choice == 5:
+        print("Exiting program...")
+        break
+
+    else:
+        print("Invalid choice!")
