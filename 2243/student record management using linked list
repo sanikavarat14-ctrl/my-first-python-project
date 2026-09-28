@@ -1,0 +1,205 @@
+# Student Record Management System using Singly Linked List
+
+# Node class
+class Node:
+    def __init__(self, roll_no, name, marks):
+        self.roll_no = roll_no
+        self.name = name
+        self.marks = marks
+        self.next = None
+
+
+# Linked List class
+class StudentList:
+    def __init__(self):
+        self.head = None
+
+    # Add student
+    def add_student(self):
+        roll_no = int(input("Enter Roll No: "))
+        name = input("Enter Name: ")
+        marks = float(input("Enter Marks: "))
+
+        new_node = Node(roll_no, name, marks)
+
+        if self.head is None:
+            self.head = new_node
+        else:
+            temp = self.head
+            while temp.next is not None:
+                temp = temp.next
+            temp.next = new_node
+
+        print("Student added successfully!")
+
+    # Display students
+    def display(self):
+        if self.head is None:
+            print("No student records found.")
+            return
+
+        print("\n--- Student Records ---")
+        temp = self.head
+
+        while temp is not None:
+            print("Roll No:", temp.roll_no)
+            print("Name:", temp.name)
+            print("Marks:", temp.marks)
+            print("----------------------")
+            temp = temp.next
+
+    # Delete student
+    def delete_student(self):
+        roll_no = int(input("Enter Roll No to delete: "))
+
+        if self.head is None:
+            print("No records found.")
+            return
+
+        # If first node is to be deleted
+        if self.head.roll_no == roll_no:
+            self.head = self.head.next
+            print("Student deleted successfully!")
+            return
+
+        temp = self.head
+
+        while temp.next is not None:
+            if temp.next.roll_no == roll_no:
+                temp.next = temp.next.next
+                print("Student deleted successfully!")
+                return
+            temp = temp.next
+
+        print("Student not found.")
+
+    # Update student
+    def update_student(self):
+        roll_no = int(input("Enter Roll No to update: "))
+
+        temp = self.head
+
+        while temp is not None:
+            if temp.roll_no == roll_no:
+                temp.name = input("Enter New Name: ")
+                temp.marks = float(input("Enter New Marks: "))
+
+                print("Student updated successfully!")
+                return
+
+            temp = temp.next
+
+        print("Student not found.")
+
+    # Search student
+    def search_student(self):
+        roll_no = int(input("Enter Roll No to search: "))
+
+        temp = self.head
+
+        while temp is not None:
+            if temp.roll_no == roll_no:
+                print("\nStudent Found!")
+                print("Roll No:", temp.roll_no)
+                print("Name:", temp.name)
+                print("Marks:", temp.marks)
+                return
+
+            temp = temp.next
+
+        print("Student not found.")
+
+    # Sort students
+    def sort_students(self):
+        if self.head is None:
+            print("No records found.")
+            return
+
+        print("\nSort By:")
+        print("1. Marks")
+        print("2. Roll No")
+
+        choice = int(input("Enter choice: "))
+
+        print("\nOrder:")
+        print("1. Ascending")
+        print("2. Descending")
+
+        order = int(input("Enter choice: "))
+
+        # Bubble sort using linked list data
+        current = self.head
+
+        while current is not None:
+            temp = current.next
+
+            while temp is not None:
+
+                if choice == 1:
+                    if order == 1 and current.marks > temp.marks:
+                        self.swap_data(current, temp)
+
+                    elif order == 2 and current.marks < temp.marks:
+                        self.swap_data(current, temp)
+
+                elif choice == 2:
+                    if order == 1 and current.roll_no > temp.roll_no:
+                        self.swap_data(current, temp)
+
+                    elif order == 2 and current.roll_no < temp.roll_no:
+                        self.swap_data(current, temp)
+
+                temp = temp.next
+
+            current = current.next
+
+        print("Students sorted successfully!")
+
+    # Swap student data
+    def swap_data(self, node1, node2):
+        node1.roll_no, node2.roll_no = node2.roll_no, node1.roll_no
+        node1.name, node2.name = node2.name, node1.name
+        node1.marks, node2.marks = node2.marks, node1.marks
+
+
+# Main program
+student_list = StudentList()
+
+while True:
+    print("\n================================")
+    print(" STUDENT RECORD MANAGEMENT")
+    print("================================")
+    print("1. Add Student")
+    print("2. Delete Student")
+    print("3. Update Student")
+    print("4. Search Student")
+    print("5. Sort Students")
+    print("6. Display Students")
+    print("7. Exit")
+
+    choice = int(input("Enter your choice: "))
+
+    if choice == 1:
+        student_list.add_student()
+
+    elif choice == 2:
+        student_list.delete_student()
+
+    elif choice == 3:
+        student_list.update_student()
+
+    elif choice == 4:
+        student_list.search_student()
+
+    elif choice == 5:
+        student_list.sort_students()
+
+    elif choice == 6:
+        student_list.display()
+
+    elif choice == 7:
+        print("Thank you!")
+        break
+
+    else:
+        print("Invalid choice!")
